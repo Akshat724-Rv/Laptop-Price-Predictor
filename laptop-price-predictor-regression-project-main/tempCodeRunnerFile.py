@@ -1,0 +1,1 @@
+cd "C:\Users\aksha\OneDrive\Desktop\Sem 6\laptop-price-predictor-regression-project-main (1)\laptop-price-predictor-regression-project-main"
