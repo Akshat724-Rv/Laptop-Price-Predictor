@@ -4,6 +4,9 @@ import pandas as pd
 import numpy as np
 import os 
 
+if "prediction" not in st.session_state:
+    st.session_state.prediction = None
+
 # ---------- PAGE CONFIG ----------
 st.set_page_config(page_title="Laptop Price Predictor", page_icon="💻", layout="wide")
 
@@ -193,21 +196,16 @@ if st.button("🔮 Predict Laptop Price"):
 
         # clamp realistic range
         price = max(10000, min(price, 300000))
-        prediction = int(price)
-
-        st.markdown(
-            f'<div class="result">💰 Estimated Price: ₹ {prediction:,}</div>',
-            unsafe_allow_html=True
-        )
-
+        st.session_state.prediction = int(price)
+        
         # ---------- SIMILAR LAPTOPS ----------
         st.markdown("### 💻 Similar Laptops")
 
         price_col = 'Price' if 'Price' in df.columns else 'price'
 
         similar = df[
-            (df[price_col] >= prediction * 0.6) &
-            (df[price_col] <= prediction * 1.4)
+            (df[price_col] >= st.session_state.prediction * 0.6) &
+            (df[price_col] <= st.session_state.prediction * 1.4)
         ]
 
         if similar.shape[0] > 0:
@@ -216,13 +214,20 @@ if st.button("🔮 Predict Laptop Price"):
             # price round + int convert
             similar_display[price_col] = similar_display[price_col].astype(float).round(0).astype(int)
                
-             # sort first, then show
+           # sort first, then show
             similar_display = similar_display.sort_values(by=price_col)
 
-            st.dataframe(similar_display.head(5))
+            st.table(similar_display.head(5))
         
         else:
             st.info("No similar laptops found.")
+
+
+if st.session_state.prediction is not None:
+    st.markdown(
+        f'<div class="result">💰 Estimated Price: ₹ {st.session_state.prediction:,}</div>',
+        unsafe_allow_html=True
+    )
 # ---------- COMPARE ----------
 st.divider()
 st.markdown("## ⚔️ Compare Two Laptops")
