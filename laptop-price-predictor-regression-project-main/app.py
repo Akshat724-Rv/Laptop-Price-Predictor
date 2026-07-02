@@ -220,7 +220,7 @@ if st.button("🔮 Predict Laptop Price"):
            # sort first, then show
             similar_display = similar_display.sort_values(by=price_col)
 
-            st.session_state.similar_display = similar_display
+            st.session_state.similar_display = similar_display.head(5)
         
         else:
             st.info("No similar laptops found.")
@@ -235,7 +235,7 @@ if st.session_state.prediction is not None:
 if st.session_state.similar_display is not None:
     st.markdown("### 💻 Similar Laptops")
     st.table(st.session_state.similar_display)
-        
+
 # ---------- COMPARE ----------
 st.divider()
 st.markdown("## ⚔️ Compare Two Laptops")
