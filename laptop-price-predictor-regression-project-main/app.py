@@ -2,13 +2,17 @@ import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
+import os 
 
 # ---------- PAGE CONFIG ----------
 st.set_page_config(page_title="Laptop Price Predictor", page_icon="💻", layout="wide")
 
 # ---------- LOAD DATA & MODEL ----------
-pipe = pickle.load(open('pipe.pkl', 'rb'))
-df = pickle.load(open('df.pkl', 'rb'))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+pipe = pickle.load(open(os.path.join(BASE_DIR, "pipe.pkl"), "rb"))
+df = pickle.load(open(os.path.join(BASE_DIR, "df.pkl"), "rb"))
+
 
 # ---------- CUSTOM CSS ----------
 st.markdown("""
