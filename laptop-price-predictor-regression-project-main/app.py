@@ -7,17 +7,8 @@ import os
 # ---------- PAGE CONFIG ----------
 st.set_page_config(page_title="Laptop Price Predictor", page_icon="💻", layout="wide")
 
-st.write("Current Directory:", os.getcwd())
-st.write("Files:", os.listdir())
-
-
 # ---------- LOAD DATA & MODEL ----------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-st.write("Current Directory:", os.getcwd())
-st.write("BASE_DIR:", BASE_DIR)
-st.write("Files:", os.listdir())
-st.write("Files in BASE_DIR:", os.listdir(BASE_DIR))
 
 pipe = pickle.load(open(os.path.join(BASE_DIR, "pipe.pkl"), "rb"))
 df = pickle.load(open(os.path.join(BASE_DIR, "df.pkl"), "rb"))
