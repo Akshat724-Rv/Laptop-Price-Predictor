@@ -263,6 +263,18 @@ def make_query(company, ram, cpu,gpu, ssd):
     X_res, Y_res = map(int, resolution.split('x'))
     ppi = ((X_res**2 + Y_res**2)**0.5) / screen_size
 
+    os_clean = os.lower()
+    if "windows" in os_clean:
+        os_model = "Windows"
+    elif "mac" in os_clean:
+        os_model = "Mac"
+    elif "linux" in os_clean:
+        os_model = "Linux"
+    else:
+        os_model = "No OS"
+
+    os_model = safe_value(os_model, df['OpSys'].unique()) 
+
     return pd.DataFrame([{
             'Company': company,
             'TypeName': 'Notebook',
@@ -275,17 +287,19 @@ def make_query(company, ram, cpu,gpu, ssd):
             'HDD': int(hdd),
             'SSD': int(ssd),
             'Gpu brand': gpu,
-            'OpSys': 'Windows'
+            'OpSys': os_model
         }]).astype(object)
 
     # ---------- SAFE COMPARE PREDICTION ----------
 def safe_price(pred):
     if np.isnan(pred) or np.isinf(pred):
          return None
+    
     if 0 <= pred <= 20:
          price = np.exp(pred)
     else:
          price = pred
+    price = max(10000, min(price, 300000))     
     return int(price)
 
 if st.button("⚔️ Compare"):
@@ -314,6 +328,6 @@ if st.button("⚔️ Compare"):
             st.success("Laptop B is Premium Choice")
         else:
             st.warning("Both laptops are similar in price")
-  # cd "C:\Users\aksha\OneDrive\Desktop\Sem 6\laptop-price-predictor-regression-project-main (1)\laptop-price-predictor-regression-project-main"
+  # cd  "C:\Users\aksha\OneDrive\Desktop\Sem 6\laptop-price-predictor-regression-project-main (1)\laptop-price-predictor-regression-project-main"
   # python train_model.py 
   # streamlit run app.py
