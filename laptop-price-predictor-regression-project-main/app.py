@@ -202,7 +202,6 @@ if st.button("🔮 Predict Laptop Price"):
         st.session_state.prediction = int(price)
         
         # ---------- SIMILAR LAPTOPS ----------
-        st.markdown("### 💻 Similar Laptops")
 
         price_col = 'Price' if 'Price' in df.columns else 'price'
 
@@ -328,6 +327,6 @@ if st.button("⚔️ Compare"):
             st.success("Laptop B is Premium Choice")
         else:
             st.warning("Both laptops are similar in price")
-  # cd  "C:\Users\aksha\OneDrive\Desktop\Sem 6\laptop-price-predictor-regression-project-main (1)\laptop-price-predictor-regression-project-main"
+  # cd "C:\Users\aksha\OneDrive\Desktop\Sem 6\laptop-price-predictor-regression-project-main (1)\laptop-price-predictor-regression-project-main"
   # python train_model.py 
   # streamlit run app.py
